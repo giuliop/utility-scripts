@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+#tail -f /var/log/uwsgi/uwsgi.log
+#sudo tail -f /var/log/nginx/access.log
+#tail -f /var/log/mongodb/mongod.log
+
+# the name of your primary tmux session
+SESSION=$USER
+ 
+# if the session is already running, just attach to it.
+tmux has-session -t $SESSION
+if [ $? -eq 0 ]; then
+    echo "Session $SESSION already exists. Attaching."
+    sleep 1
+    tmux attach -t $SESSION
+    exit 0;
+fi
+ 
+# create a new session, named $SESSION, and detach from it
+tmux new-session -d -s $SESSION
+
+# populate the windows you want
+tmux new-window -t $SESSION:8 -n 'root' 'su - root'
+tmux new-window -t $SESSION:9 -n 'tricks' 'vim ~/docs/tricks'
+
+tmux new-window -t $SESSION:7 -n 'logs' 'sudo tail -f /var/log/nginx/error.log'
+tmux split-window -p 75 -t $SESSION:7 'sudo tail -f /var/log/nginx/access.log'
+tmux split-window -t $SESSION:7 'tail -f /var/log/mongodb/mongod.log'
+tmux split-window -h -t $SESSION:7 'tail -f /var/log/uwsgi/uwsgi.log'
+  
+ 
+# all done. select starting window and get to work
+# you may need to cycle through windows and type in passwords
+# if you don't use ssh keys
+tmux select-window -t $SESSION:0
+tmux -2 attach -t $SESSION
