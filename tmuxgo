@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-#tail -f /var/log/uwsgi/uwsgi.log
-#sudo tail -f /var/log/nginx/access.log
-#tail -f /var/log/mongodb/mongod.log
-
 # the name of your primary tmux session
 SESSION=$USER
  
@@ -12,7 +8,7 @@ tmux has-session -t $SESSION
 if [ $? -eq 0 ]; then
     echo "Session $SESSION already exists. Attaching."
     sleep 1
-    tmux attach -t $SESSION
+    tmux -2 attach -t $SESSION
     exit 0;
 fi
  
