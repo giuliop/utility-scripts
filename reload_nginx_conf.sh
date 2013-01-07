@@ -1,6 +1,6 @@
 #!/usr/bin/env bash 
 
-sudo nginx -t -c /etc/nginx/conf/nginx.conf
+sudo nginx -t -c /etc/nginx/nginx.conf
 echo "Do you wish to relaunch nginx?"
 select yn in "Yes" "No"; do
         case $yn in
