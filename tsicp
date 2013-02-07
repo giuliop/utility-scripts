@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # the name of tmux session
-SESSION="sicp". "_" . $USER
+SESSION="sicp"_$USER
 
 # if the session is already running, just attach to it.
 tmux has-session -t $SESSION
@@ -17,7 +17,7 @@ tmux new-session -d -s $SESSION
 
 # populate the windows you want
 tmux new-window -t $SESSION:0 -n 'sicp' 'vim ~/dev/sicp/3.scm'
-tmux split-window -t $SESSION:8 'gsi 3.scm -'
+tmux split-window -t $SESSION:0 'gsi 3.scm -'
 #tmux split-window -p 75 -t $SESSION:8 'sudo tail -f /var/log/nginx/access.log'
 #tmux split-window -h -t $SESSION:8 'tail -f /var/log/uwsgi/uwsgi.log'
 
