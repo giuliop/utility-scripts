@@ -1,0 +1,17 @@
+# list of git repo to update
+
+git_dirs=(
+    ~/dev/dotfiles/
+    ~/dev/scripts/
+    ~/dev/sicp/
+    ~/.vim
+    )
+
+for dir in ${git_dirs[@]}; do
+    echo
+    echo "processing "$dir
+    cd $dir
+    git pull
+    git push
+done
+
