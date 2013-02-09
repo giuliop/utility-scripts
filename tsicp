@@ -13,17 +13,12 @@ if [ $? -eq 0 ]; then
 fi
 
 # create a new session, named $SESSION, and detach from it
-tmux new-session -d -s $SESSION
+tmux new-session -d -s $SESSION -n 'sicp' 'vim ~/dev/sicp/3.scm;bash -i'
 
 # populate the windows you want
-tmux new-window -t $SESSION:0 -n 'sicp' 'vim ~/dev/sicp/3.scm'
-tmux split-window -t $SESSION:0 'gsi 3.scm -'
-#tmux split-window -p 75 -t $SESSION:8 'sudo tail -f /var/log/nginx/access.log'
-#tmux split-window -h -t $SESSION:8 'tail -f /var/log/uwsgi/uwsgi.log'
-
+tmux split-window -h -t $SESSION:0 'gsi ~/dev/sicp/3.scm -;bash -i'
+tmux new-window -t $SESSION
 
 # all done. select starting window and get to work
-# you may need to cycle through windows and type in passwords
-# if you don't use ssh keys
 tmux select-window -t $SESSION:0
 tmux -2 attach -t $SESSION
