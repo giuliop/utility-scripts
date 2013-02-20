@@ -1,5 +1,6 @@
-# list of git repo to update
+#!/usr/bin/env bash
 
+# list of git repo to update
 git_dirs=(
     ~/dev/dotfiles/
     ~/dev/scripts/
@@ -7,10 +8,12 @@ git_dirs=(
     ~/.vim
     )
 
+# for each dir git pull and push
 for dir in ${git_dirs[@]}; do
     echo
     echo "processing "$dir
     cd $dir
+    git status
     git pull
     git push
 done
