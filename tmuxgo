@@ -22,5 +22,5 @@ tmux new-window -t $SESSION:9 -n 'quickref' 'vim ~/dev/dotfiles/quickref;bash -i
 # all done. select starting window and get to work
 # you may need to cycle through windows and type in passwords
 # if you don't use ssh keys
-tmux select-window -t $SESSION:0
+tmux select-window -t $SESSION:1
 tmux -2 attach -t $SESSION
