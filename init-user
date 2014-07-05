@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+# This script is meant to initialize a new user after their home folder has been created
+# A key to access Github, etc. should already be in ~/.ssh; then the script does:
+# -> my dotfiles repo is cloned, symlinks created
+# -> my scripts repo is cloned
+# -> my sicp repo is cloned
+# -> my vim repo is cloned and Vundle used to install plugins
+
+#start ssh-agent to avoid having to input passowrds all the time
+if [ ! -f ~/.ssh/id_rsa ] ; then
+    echo Please add a private key ~/.ssh/id_rsa for GitHub, etc.
+    exit
+else
+    SSH_ENV="$HOME/.ssh/environment"
+    function start_agent {
+        echo "Initialising new SSH agent..."
+        /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+        echo succeeded
+        chmod 600 "${SSH_ENV}"
+        . "${SSH_ENV}" > /dev/null
+        /usr/bin/ssh-add;
+    }
+    # Source SSH settings, if applicable
+    if [ -f "${SSH_ENV}" ]; then
+        . "${SSH_ENV}" > /dev/null
+        ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+            start_agent;
+        }
+    else
+        start_agent;
+    fi
+fi
+
+#get dotfiles if needed
+if [ ! -d ~/dev/dotfiles/ ] ; then
+    mkdir -p ~/dev/dotfiles/
+    git clone git@github.com:giuliop/dotfiles.git ~/dev/dotfiles/
+    #create symlinks
+    cd ~
+    ln -sf ~/dev/dotfiles/.bash_profile
+    ln -sf ~/dev/dotfiles/.bashrc
+    ln -sf ~/dev/dotfiles/.inputrc
+    ln -sf ~/dev/dotfiles/.tmux.conf
+    ln -sf ~/dev/dotfiles/.gitconfig
+    #delete old files
+    if [ -f ~/.profile ] ; then
+        rm ~/.profile
+    fi
+    echo -e "\n***\nPlease run . ~/.bash_profile to load the new configuration\n***\n"
+fi
+
+#get my scripts if needed
+if [ ! -d ~/dev/scripts/ ] ; then
+    mkdir -p ~/dev/scripts/
+    git clone git@github.com:giuliop/utility-scripts.git ~/dev/scripts/
+fi
+
+#get sicp if needed
+if [ ! -d ~/dev/sicp/ ] ; then
+    mkdir -p ~/dev/sicp/
+    git clone git@github.com:giuliop/sicp.git ~/dev/sicp/
+fi
+
+#get vim if needed
+if [ ! -d  ~/.vim/ ] ; then
+    mkdir -p ~/.vim/
+    git clone git@github.com:giuliop/vim.git ~/.vim/
+    git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    vim +PluginInstall +qall
+    #install YCM if present
+    if [ -d  ~/.vim/bundle/YouCompleteMe/ ] ; then
+        ~/.vim/bundle/YouCompleteMe/install.sh
+    fi
+    #delete old files
+    if [ -f ~/.viminfo ] ; then
+        rm ~/.viminfo
+    fi
+fi
+
