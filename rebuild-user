@@ -2,6 +2,8 @@
 
 # This script is meant to initialize a new user after their home folder has been created
 # A key to access Github, etc. should already be in ~/.ssh; then the script does:
+# -> start ssh-agent
+# -> install useful software if needed
 # -> my dotfiles repo is cloned, symlinks created
 # -> my scripts repo is cloned
 # -> my sicp repo is cloned
@@ -32,7 +34,12 @@ else
     fi
 fi
 
-#get dotfiles if needed
+# install software
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get -y install curl git mercurial vim autojump bash-completion trash-cli
+
+#get dotfiles repo if needed
 if [ ! -d ~/dev/dotfiles/ ] ; then
     mkdir -p ~/dev/dotfiles/
     git clone git@github.com:giuliop/dotfiles.git ~/dev/dotfiles/
@@ -50,19 +57,19 @@ if [ ! -d ~/dev/dotfiles/ ] ; then
     echo -e "\n***\nPlease run . ~/.bash_profile to load the new configuration\n***\n"
 fi
 
-#get my scripts if needed
+#get my scripts repo if needed
 if [ ! -d ~/dev/scripts/ ] ; then
     mkdir -p ~/dev/scripts/
     git clone git@github.com:giuliop/utility-scripts.git ~/dev/scripts/
 fi
 
-#get sicp if needed
+#get sicp repo if needed
 if [ ! -d ~/dev/sicp/ ] ; then
     mkdir -p ~/dev/sicp/
     git clone git@github.com:giuliop/sicp.git ~/dev/sicp/
 fi
 
-#get vim if needed
+#get vim repo if needed
 if [ ! -d  ~/.vim/ ] ; then
     mkdir -p ~/.vim/
     git clone git@github.com:giuliop/vim.git ~/.vim/
