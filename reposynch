@@ -6,6 +6,7 @@ git_dirs=(
     ~/dev/scripts/
     ~/dev/sicp/
     ~/.vim
+    ~/.emacs.d
     )
 
 # for each dir git pull and push
