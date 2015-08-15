@@ -2,11 +2,12 @@
 
 # list of git repo to update
 git_dirs=(
-    ~/dev/dotfiles/
-    ~/dev/scripts/
-    ~/dev/sicp/
+    ~/dev/dotfiles
+    ~/dev/scripts
+    ~/dev/sicp
     ~/.vim
     ~/.emacs.d
+    ~/dev/clojure/lib/gws
     )
 
 # for each dir git pull and push
