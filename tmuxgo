@@ -16,7 +16,7 @@ fi
 tmux new-session -d -s $SESSION
 
 # populate the windows you want
-tmux new-window -t $SESSION:9 -n 'quickref' 'vim ~/dev/dotfiles/quickref;bash -i'
+tmux new-window -t $SESSION:9 -n 'quickref' 'nvim ~/dev/dotfiles/quickref;bash -i'
 
 # all done. select starting window and get to work
 # you may need to cycle through windows and type in passwords
