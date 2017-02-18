@@ -1,22 +1,33 @@
 #!/usr/bin/env bash
 
-# list of git repo to update
-git_dirs=(
-    ~/dev/dotfiles
-    ~/dev/scripts
-    ~/dev/sicp
-    ~/.config/nvim
-    #~/.emacs.d
-    ~/dev/clojure/lib/gws
-    )
+### This script synchs a bunch of git repos ###
 
-# for each dir git pull and push
-for dir in ${git_dirs[@]}; do
+# dict with local dirs as keys and remote repos as values
+declare -A git_dirs=(
+   ["$HOME/dev/dotfiles"]="git@github.com:giuliop/dotfiles.git" 
+   #["$HOME/dev/sicp"]="git@github.com:giuliop/sicp.git"
+   ["$HOME/dev/scripts"]="git@github.com:giuliop/utility-scripts.git"
+   ["$HOME/.config/nvim"]="git@github.com:giuliop/nvim.git"
+   ["$HOME/dev/clojure/lib/gws"]="git@github.com:giuliop/clojure-mylib.git"
+)
+
+# for each dir
+for dir in "${!git_dirs[@]}"; do
     echo
-    echo "processing "$dir
-    cd $dir
-    git status
-    git pull
-    git push
+    echo "processing $dir"
+
+    # if no git repo create it
+    if [ ! -d "$dir/.git/" ]; then
+        echo "Repo not found: $dir/.git/"
+        mkdir -p "$dir"
+        git clone "${git_dirs[$dir]}" "$dir"
+
+    # else git pull and push
+    else
+        cd "$dir"
+        git status
+        git pull
+        git push
+    fi
 done
 
