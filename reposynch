@@ -5,7 +5,7 @@ git_dirs=(
     ~/dev/dotfiles
     ~/dev/scripts
     ~/dev/sicp
-    ~/.vim
+    ~/.config/nvim
     ~/.emacs.d
     ~/dev/clojure/lib/gws
     )
