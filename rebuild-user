@@ -6,8 +6,7 @@
 # -> install useful software if needed
 # -> my dotfiles repo is cloned, symlinks created
 # -> my scripts repo is cloned
-# -> my sicp repo is cloned
-# -> my vim repo is cloned and Vundle used to install plugins
+# -> my neovim repo is cloned
 
 #start ssh-agent to avoid having to input passowrds all the time
 if [ ! -f ~/.ssh/id_rsa ] ; then
@@ -37,7 +36,8 @@ fi
 # install software
 sudo apt-get -y update
 sudo apt-get -y upgrade
-sudo apt-get -y install curl git mercurial vim autojump bash-completion trash-cli
+sudo apt-add-repository ppa:neovim-ppa/stable
+sudo apt-get -y install curl git mercurial neovim autojump bash-completion
 
 #get dotfiles repo if needed
 if [ ! -d ~/dev/dotfiles/ ] ; then
@@ -63,25 +63,12 @@ if [ ! -d ~/dev/scripts/ ] ; then
     git clone git@github.com:giuliop/utility-scripts.git ~/dev/scripts/
 fi
 
-#get sicp repo if needed
-if [ ! -d ~/dev/sicp/ ] ; then
-    mkdir -p ~/dev/sicp/
-    git clone git@github.com:giuliop/sicp.git ~/dev/sicp/
-fi
-
-#get vim repo if needed
-if [ ! -d  ~/.vim/ ] ; then
-    mkdir -p ~/.vim/
-    git clone git@github.com:giuliop/vim.git ~/.vim/
-    git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-    vim +PluginInstall +qall
-    #install YCM if present
-    if [ -d  ~/.vim/bundle/YouCompleteMe/ ] ; then
-        ~/.vim/bundle/YouCompleteMe/install.sh
-    fi
-    #delete old files
-    if [ -f ~/.viminfo ] ; then
-        rm ~/.viminfo
-    fi
+#get neovim repo if needed
+if [ ! -d /home/gws/.config/nvim ] ; then
+    mkdir -p /home/gws/.config/nvim
+    git clone git@github.com:giuliop/nvim.git /home/gws/.config/nvim
+    #get plug.vim to manage plug-ins
+    curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
