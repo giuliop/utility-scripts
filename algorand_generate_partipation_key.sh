@@ -24,11 +24,13 @@ sudo -u algorand goal account changeonlinestatus --partkeyfile=$KEY_FILE \
 sudo chown $USER:$USER $DIR/online.txn
 sudo mv $DIR/online.txn .
 
+echo "1. Now sign and send the transaction in 'online.txn'"
 echo
-echo "Now sign and send the transaction in 'online.txn'"
+echo "2. After at least 320 rounds check that the node is participating in consensus:"
+echo "   >>  grep 'VoteBroadcast' node.log"
 echo
-echo "After at least 320 rounds check that the node is participating in consensus:"
-echo "grep 'VoteBroadcast' node.log"
+echo "3. Then delete the old participation key in /var/lib/algorand/mainnet-v1.0/"
 echo
-echo "Then delete the old participation key in /var/lib/algorand/mainnet-v1.0/"
+echo "4. Finally restart node:"
+echo "   >>  sudo systemctl restart algorand"
 
