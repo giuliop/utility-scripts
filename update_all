@@ -1,4 +1,13 @@
 #!/usr/bin/env bash
 
-sudo apt-get -y update
-sudo apt-get -y upgrade
+# Detect os
+os=$(uname)
+
+if [[ $os == 'Darwin' ]]; then  # we mare on macOs
+    brew update
+    brew outdated
+    brew upgrade
+else                            # assume ubuntu
+    sudo apt-get -y update
+    sudo apt-get -y upgrade
+fi
