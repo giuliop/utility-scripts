@@ -9,7 +9,7 @@ declare -A git_dirs=(
    #["$HOME/dev/clojure/ai"]="git@github.com:giuliop/AI-modern-approach-3e.git"
    ["$HOME/dev/scripts"]="git@github.com:giuliop/utility-scripts.git"
    ["$HOME/.config/nvim"]="git@github.com:giuliop/nvim.git"
-   ["$HOME/dev/clojure/lib/gws"]="git@github.com:giuliop/clojure-mylib.git"
+   #["$HOME/dev/clojure/lib/gws"]="git@github.com:giuliop/clojure-mylib.git"
 )
 
 # for each dir
