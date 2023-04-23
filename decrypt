@@ -1,0 +1,14 @@
+#!/bin/bash
+
+echo "Enter input string to be decrypted:"
+read input_string
+echo "Enter decryption password:"
+read -s password
+
+# decode base64 encoded string
+input_string=$(echo "$input_string" | base64 -d)
+
+decrypted=$(echo "$input_string" | openssl enc -d -aes-256-cbc -a -salt -pass pass:"$password")
+
+echo "Decrypted string:"
+echo "$decrypted"
