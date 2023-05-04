@@ -5,10 +5,7 @@ read input_string
 echo "Enter encryption password:"
 read -s password
 
-encrypted=$(echo "$input_string" | openssl enc -aes-256-cbc -a -salt -pass pass:"$password")
-
-# transform encrypted to base64 encoded string
-encrypted=$(echo "$encrypted" | base64)
+encrypted=$(echo "$input_string" | openssl enc -aes-256-cbc -a -A -salt -pass pass:"$password")
 
 echo "Encrypted string:"
 echo "$encrypted"
