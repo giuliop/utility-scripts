@@ -3,7 +3,8 @@
 import subprocess
 
 NODE_DIR = "/var/lib/algorand"
-BLOCKS_PER_DAYS = 19200
+BLOCK_TIME = 3.3
+BLOCKS_PER_DAYS = round(24*60*60 / BLOCK_TIME)
 
 # execute a shell command `cmd` and return the output as a string
 def execute(cmd):
@@ -25,7 +26,7 @@ def get_online_nodes():
     return [[words[1] , int(words[5])]
             for line in output
             for words in [line.split()]]
-    
+
 output = []
 
 for node, expiration_round in get_online_nodes():
