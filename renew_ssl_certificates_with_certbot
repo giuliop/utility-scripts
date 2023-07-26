@@ -9,10 +9,10 @@ process_info=$(sudo lsof -i :$PORT -sTCP:LISTEN -t -n -P)
 if [ -n "$process_info" ]; then
     process_name=$(ps -p $process_info -o comm=)
     echo "Port $PORT is being used by the following service: $process_name"
-    echo "Please stop the service with the command below, then press any key to continue"
+    echo "If the script fails then stop the service above with the following command and rerun the script"
     echo "sudo systemctl stop ..."
     # Wait for the user to press a key
-    read -n1 -s
+    #read -n1 -s
 fi
 
 # call certbot to renew the certificates
