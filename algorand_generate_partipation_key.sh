@@ -3,9 +3,8 @@
 # The key starts from current round and last for 3,000,000 rounds.
 # A key registration transaction (to be signed) will be created in the current folder.
 
-ACCOUNT_ADDR="OCSSD3JEBBBETMXOJN2YS2S3KPZLRVYY7TPCI3PKHRUVE7EOOPNKXSK3OQ"
+ACCOUNT_ADDR="UXQAJJQV6GJNQMV53WQUYQTSJIMRGMT224IECW6HGSWOTXBICXCTUJ635E"
 DIR="/var/lib/algorand"
-USER="gws"
 
 FIRST_ROUND=$(goal node status -d /var/lib/algorand | awk 'FNR == 1 {print $4}')
 LAST_ROUND=$(($FIRST_ROUND + 3000000))
