@@ -2,6 +2,7 @@
 
 import subprocess
 
+
 NODE_DIR = "/var/lib/algorand"
 BLOCK_TIME = 3.3
 BLOCKS_PER_DAYS = round(24*60*60 / BLOCK_TIME)
@@ -29,11 +30,15 @@ def get_online_nodes():
 
 output = []
 
-for node, expiration_round in get_online_nodes():
-    if expiration_round < current_block:
-        output.append(f"{node} is offline since {round((current_block - expiration_round) / BLOCKS_PER_DAYS)} days")
-    else:
-        output.append(f"{node} will expire in {round((expiration_round - current_block) / BLOCKS_PER_DAYS)} days")
+online_nodes = get_online_nodes()
+if len(online_nodes) == 0:
+    output.append("No online nodes")
+else:
+    for node, expiration_round in online_nodes:
+        if expiration_round < current_block:
+            output.append(f"{node} is offline since {round((current_block - expiration_round) / BLOCKS_PER_DAYS)} days")
+        else:
+            output.append(f"{node} will expire in {round((expiration_round - current_block) / BLOCKS_PER_DAYS)} days")
 
 for line in output:
     # print the output in bold to the shell with a newline between each line
