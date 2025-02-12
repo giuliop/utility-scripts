@@ -1,11 +1,11 @@
 #!/bin/bash
 
 echo "Enter input string to be encrypted:"
-read input_string
+read -rs input_string
 echo "Enter encryption password:"
-read -s password
+read -rs password
 
-encrypted=$(echo "$input_string" | openssl enc -aes-256-cbc -a -A -salt -pass pass:"$password")
+encrypted=$(echo "$input_string" | openssl enc -aes-256-cbc -pbkdf2 -a -A -salt -pass pass:"$password")
 
 echo "Encrypted string:"
 echo "$encrypted"
